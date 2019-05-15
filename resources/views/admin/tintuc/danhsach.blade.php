@@ -10,6 +10,11 @@
                         </h1>
                     </div>
                     <!-- /.col-lg-12 -->
+                    @if(session('thongbao'))
+                        <div class="alert alert-success">
+                            {{session('thongbao')}}
+                        </div>
+                    @endif
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
                             <tr align="center">
@@ -32,7 +37,7 @@
                                         <p>{{$tt->TieuDe}}</p>
                                         <img width="100px" src="upload/tintuc/{{$tt->Hinh}}" />
                                     </td>
-                                    <td>{{$tt->TomTat}}</td>
+                                    <td>{!! $tt->TomTat !!}</td>
                                     <td>{{$tt->loaitin->theloai->Ten}}</td>
                                     <td>{{$tt->loaitin->Ten}}</td>
                                     <td>{{$tt->SoLuotXem}}</td>

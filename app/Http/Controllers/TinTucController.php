@@ -41,6 +41,7 @@ class TinTucController extends Controller
     	$tintuc->TomTat = $request->TomTat;
     	$tintuc->NoiDung = $request->NoiDung;
     	$tintuc->SoLuotXem = 0;
+    	$tintuc->NoiBat = $request->NoiBat;
 
     	if ($request->hasFile('Hinh')) {
     		$file = $request->file('Hinh');
@@ -67,12 +68,53 @@ class TinTucController extends Controller
     	$tintuc = TinTuc::find($id);
     	$theloai = TheLoai::all();
     	$loaitin = LoaiTin::all();
-    	return = view('admin.tintuc.sua',['tintuc'=>$tintuc, 'theloai'=>$theloai,'loaitin'=>$loaitin]);
+    	return view('admin.tintuc.sua',['tintuc'=>$tintuc, 'theloai'=>$theloai,'loaitin'=>$loaitin]);
     }
     public function postSua(Request $request, $id){
-    	
+    	$tintuc = Tintuc::find($id);
+    	$this->validate($request,
+    		[
+    			'LoaiTin'=>'required',
+    			'TieuDe' => 'required|min:3',
+    			'TomTat'=>'required',
+    			'NoiDung'=>'required'
+	    	],
+	    	[
+	    		'LoaiTin.required'=>'Bạn chưa chọn loại tin',
+	    		'TieuDe.required'=>'Bạn chưa nhập tiêu đề',
+	    		'TieuDe.min'=>'Tiêu đề phải có ít nhất 3 kí tự',	    		
+	    		'TomTat.required'=>'Bạn chưa nhập tóm tắt',
+	    		'NoiDung.required'=>'Bạn chưa nhập nội dung'
+	    	]);
+    	$tintuc->TieuDe = $request->TieuDe;
+    	$tintuc->TieuDeKhongDau = changeTitle($request->TieuDe);
+    	$tintuc->idLoaiTin = $request->LoaiTin;
+    	$tintuc->TomTat = $request->TomTat;
+    	$tintuc->NoiDung = $request->NoiDung;
+    	$tintuc->SoLuotXem = 0;
+    	$tintuc->NoiBat = $request->NoiBat;
+
+    	if ($request->hasFile('Hinh')) {
+    		$file = $request->file('Hinh');
+    		$duoi = $file->getClientOriginalExtension();
+    		if ($duoi != 'jpg' && $duoi != 'png' && $duoi != 'jpeg') {
+    			return redirect('admin/tintuc/them')->with('loi','Bạn chỉ được chọn file có đuôi jpg, png, jpeg');
+    		}
+    		$name = $file->getClientOriginalName();
+    		$hinh = str_random(4) ."_". $name;
+    		while (file_exists("upload/tintuc/".$hinh)) {
+    			$hinh = str_random(4) ."_". $name;
+    		}
+    		$file->move("upload/tintuc",$hinh);
+    		unlink("upload/tintuc/".$tintuc->Hinh);
+    		$tintuc->Hinh = $hinh;
+    	}
+    	$tintuc->save();
+    	return redirect('admin/tintuc/sua/'.$id)->with('thongbao','Sửa thành công');
     } 
     public function getXoa($id){
-    	
+    	$tintuc = TinTuc::find($id);
+    	$tintuc->delete();
+    	return redirect('admin/tintuc/danhsach')->with('thongbao', 'Xóa thành công');
     }
 }
