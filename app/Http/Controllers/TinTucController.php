@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\TheLoai;
 use App\LoaiTin;
 use App\TinTuc;
+use App\Comment;
 
 class TinTucController extends Controller
 {

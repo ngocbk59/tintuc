@@ -49,6 +49,9 @@ Route::group(['prefix'=>'admin'], function(){
 
 		Route::get('xoa/{id}', "TinTucController@getXoa");
 	});
+	Route::group(['prefix'=>'comment'], function(){
+		Route::get('xoa/{id}/{idTinTuc}', "CommentController@getXoa");
+	});
 	Route::group(['prefix'=>'ajax'], function(){
 		Route::get('loaitin/{idTheLoai}', 'AjaxController@getLoaiTin');
 	});
