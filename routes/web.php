@@ -52,6 +52,17 @@ Route::group(['prefix'=>'admin'], function(){
 	Route::group(['prefix'=>'comment'], function(){
 		Route::get('xoa/{id}/{idTinTuc}', "CommentController@getXoa");
 	});
+	Route::group(['prefix'=>'slide'], function(){
+		Route::get('danhsach','SlideController@getDanhSach');
+
+		Route::get('sua/{id}','SlideController@getSua');
+		Route::post('sua/{id}','SlideController@postSua');
+
+		Route::get('them','SlideController@getThem');
+		Route::post('them','SlideController@postThem');
+
+		Route::get('xoa/{id}', "SlideController@getXoa");
+	});
 	Route::group(['prefix'=>'ajax'], function(){
 		Route::get('loaitin/{idTheLoai}', 'AjaxController@getLoaiTin');
 	});
