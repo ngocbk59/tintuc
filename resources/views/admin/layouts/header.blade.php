@@ -17,6 +17,7 @@
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
             </a>
+            @if(Auth::check())
             <ul class="dropdown-menu dropdown-user">
                 
                 <li><i class="fa fa-user fa-fw"></i> {{Auth::user()->name}}</a>
@@ -26,8 +27,8 @@
                 <li class="divider"></li>
                 <li><a href="admin/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                 </li>
-                
-            </ul>
+               
+            </ul> @endif
             <!-- /.dropdown-user -->
         </li>
         <!-- /.dropdown -->

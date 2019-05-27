@@ -95,7 +95,8 @@ class UserController extends Controller
     		return redirect('admin/dangnhap')->with('thongbao', 'Đăng nhập không thành công');
     	}
     }
-    public function getDangXuatAdmin(){
+
+    public function getDangXuatAdmin() {
     	Auth::logout();
     	return redirect('admin/dangnhap');
     }

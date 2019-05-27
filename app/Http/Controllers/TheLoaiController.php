@@ -8,9 +8,14 @@ use Illuminate\Support\Facades\Auth;
 
 class TheLoaiController extends Controller
 {
+    function __construct() {
+        parent::__construct();
+        
+    }
+
     public function getDanhSach(){
-        //dd(Auth::user()->name);
     	$theloai  = TheLoai::all();
+
     	return view('admin.theloai.danhsach',['theloai'=>$theloai]);
     }
     public function getThem(){
