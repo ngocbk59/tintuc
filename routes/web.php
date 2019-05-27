@@ -84,3 +84,4 @@ Route::group(['prefix'=>'admin','middleware'=>'adminLogin'], function(){
 });
 
 Route::get('trangchu', 'PagesController@trangchu');
+Route::get('lienhe', 'PagesController@lienhe');
