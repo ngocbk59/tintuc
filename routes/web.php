@@ -14,6 +14,10 @@ Use App\TheLoai;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('admin/dangnhap', 'UserController@getDangnhapAdmin');
+Route::post('admin/dangnhap', 'UserController@postDangnhapAdmin');
+
+Route::get('admin/logout','UserController@getDangXuatAdmin');
 
 Route::group(['prefix'=>'admin'], function(){
 	Route::group(['prefix'=>'theloai'], function(){

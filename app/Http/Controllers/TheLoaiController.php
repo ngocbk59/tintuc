@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\TheLoai;
+use Illuminate\Support\Facades\Auth;
 
 class TheLoaiController extends Controller
 {
     public function getDanhSach(){
+        //dd(Auth::user()->name);
     	$theloai  = TheLoai::all();
     	return view('admin.theloai.danhsach',['theloai'=>$theloai]);
     }
