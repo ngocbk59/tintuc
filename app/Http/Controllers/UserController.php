@@ -40,12 +40,38 @@ class UserController extends Controller
     	return redirect('admin/user/them')->with('thongbao','Thêm thành công');
     }
     public function getSua($id){
-    	
+    	$user = User::find($id);
+    	return view('admin.user.sua',['user'=>$user]);
     }
     public function postSua(Request $request, $id){
+    	$this->validate($request,[
+    		'name'=>'required|min:3',
+    	],[
+    		'name.required'=>'Bạn chưa nhập tên người dùng',
+    		'name.min'=>'Tên người dùng phải có ít nhất 3 kí tự'
+    	]);
+    	$user = User::find($id);
+    	$user->name = $request->name;
+    	$user->quyen = $request->quyen;
+    	if ($request->changePassword == "on") {
+    		$this->validate($request,[	    		
+	    		'password'=>'required|min:3|max:32',
+	    		'passwordAgain'=>'required|same:password'
+	    	],[	    		
+	    		'password.required'=>'Bạn chưa nhập password',
+	    		'password.min'=>'Mật khẩu phải có ít nhất 3 kí tự',
+	    		'password.max'=>'Mật khẩu chỉ được tối đa 32 kí tự',
+	    		'passwordAgain.same'=>'Mật khẩu nhập lại chưa khớp'
+	    	]);
+    		$user->password = bcrypt($request->password);
+    	}
     	
+    	$user->save();
+    	return redirect('admin/user/sua/'.$id)->with('thongbao','Bạn đã sửa thành công');
     } 
     public function getXoa($id){
-    	
+    	$user = User::find($id);
+    	$user->delete();
+    	return redirect('admin/user/danhsach')->with('thongbao','Xóa người dùng thành công');
     }
 }
