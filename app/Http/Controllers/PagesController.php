@@ -130,4 +130,15 @@ class PagesController extends Controller
     	$user->save();
     	return redirect('dangnhap')->with('thongbao','Chúc mừng bạn đăng ký thành công');
     }
+    function timkiem(Request $request){
+    	$tukhoa = $request->tukhoa;
+    	$tintuc = TinTuc::where('TieuDe','like',"%$tukhoa%")->orwhere('TomTat','like',"%$tukhoa%")->orwhere('NoiDung','like',"%$tukhoa%")->take(30)->paginate(5);
+    	return view('pages.timkiem',['tintuc'=>$tintuc,'tukhoa'=>$tukhoa]);
+    }
+    function getGioithieu(){
+    	return view('pages.gioithieu');
+    }
+    function getLienhe(){
+    	return view('pages.lienhe');
+    }
 }

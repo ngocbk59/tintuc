@@ -100,3 +100,8 @@ Route::post('nguoidung','PagesController@postNguoidung');
 
 Route::get('dangky', 'PagesController@getDangky');
 Route::post('dangky', 'PagesController@postDangky');
+
+Route::post('timkiem', 'PagesController@timkiem');
+
+Route::get('gioithieu', 'PagesController@getGioithieu');
+Route::get('lienhe', 'PagesController@getLienhe');
