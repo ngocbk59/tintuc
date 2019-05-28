@@ -7,6 +7,7 @@ use App\TheLoai;
 use App\Slide;
 use App\LoaiTin;
 use App\TinTuc;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 class PagesController extends Controller
@@ -99,5 +100,34 @@ class PagesController extends Controller
     	
     	$user->save();
     	return redirect('nguoidung')->with('thongbao','Bạn đã sửa thành công');
+    }
+
+    function getDangky(){
+    	return view('pages.dangky');
+    }
+    function postDangky(Request $request){
+    	$this->validate($request,[
+    		'name'=>'required|min:3',
+    		'email'=>'required|email|unique:users,email',
+    		'password'=>'required|min:3|max:32',
+    		'passwordAgain'=>'required|same:password'
+    	],[
+    		'name.required'=>'Bạn chưa nhập tên người dùng',
+    		'name.min'=>'Tên người dùng phải có ít nhất 3 kí tự',
+    		'email.required'=>'Bạn chưa nhập email',
+    		'email.email'=>'Bạn chưa nhập đúng định dạng email',
+    		'email.unique'=>'Email đã tồn tại',
+    		'password.required'=>'Bạn chưa nhập password',
+    		'password.min'=>'Mật khẩu phải có ít nhất 3 kí tự',
+    		'password.max'=>'Mật khẩu chỉ được tối đa 32 kí tự',
+    		'passwordAgain.same'=>'Mật khẩu nhập lại chưa khớp'
+    	]);
+    	$user = new User;
+    	$user->name = $request->name;
+    	$user->email = $request->email;
+    	$user->password = bcrypt($request->password);
+    	$user->quyen = 0;
+    	$user->save();
+    	return redirect('dangnhap')->with('thongbao','Chúc mừng bạn đăng ký thành công');
     }
 }
