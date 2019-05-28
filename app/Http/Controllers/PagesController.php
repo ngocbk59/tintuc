@@ -70,4 +70,11 @@ class PagesController extends Controller
     	Auth::logout();
     	return redirect('trangchu');
     }
+    function getNguoidung(){
+    	$user = Auth::user();
+    	return view('pages.nguoidung');
+    }
+    function postNguoidung(){
+
+    }
 }
