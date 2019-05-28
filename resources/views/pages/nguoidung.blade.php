@@ -9,7 +9,20 @@
             <div class="panel panel-default">
 			  	<div class="panel-heading">Thông tin tài khoản</div>
 			  	<div class="panel-body">
-			    	<form>
+			  		@if(count($errors) > 0)
+                    <div class="alert-danger">
+                        @foreach($errors->all() as $err)
+                            {{$err}}<br>
+                        @endforeach
+                    </div>
+                    @endif
+                    @if(session('thongbao'))
+                        <div class="alert alert-success">
+                            {{session('thongbao')}}
+                        </div>
+                    @endif
+			    	<form action="nguoidung" method="POST">
+			    		<input type="hidden" name="_token" value="{{csrf_token()}}">
 			    		<div>
 			    			<label>Họ tên</label>
 						  	<input type="text" class="form-control" placeholder="Username" name="name" aria-describedby="basic-addon1" value="{{Auth::user()->name}}">
@@ -33,7 +46,7 @@
 						  	<input type="password" class="form-control password" name="passwordAgain" aria-describedby="basic-addon1" disabled="">
 						</div>
 						<br>
-						<button type="button" class="btn btn-default">Sửa
+						<button type="submit" class="btn btn-default">Sửa
 						</button>
 
 			    	</form>
@@ -45,6 +58,7 @@
     </div>
     <!-- end slide -->
 </div>
+@endsection
 @section('script')
 <script>
     $(document).ready(function() {
