@@ -16,7 +16,12 @@ class PagesController extends Controller
 		$slide = Slide::all();
 		view()->share('theloai',$theloai);
 		view()->share('slide',$slide);
+
+		if (Auth::check()) {
+			view()->share('nguoidung',Auth::user());
+		}
 	}
+
     function trangchu(){
     	
     	return view('pages.trangchu');
@@ -60,5 +65,9 @@ class PagesController extends Controller
     		return redirect('dangnhap')->with('thongbao', 'Đăng nhập không thành công');
     	}
 
+    }
+    function getDangxuat(){
+    	Auth::logout();
+    	return redirect('trangchu');
     }
 }
